@@ -1,0 +1,35 @@
+#include <LiquidCrystal_I2C.h>
+
+const int temperaturePin = 34;      // Analog pin for temperature sensor
+const int outputPin = 13;           // Digital pin for output device
+
+LiquidCrystal_I2C lcd(0x27, 16, 2); // I2C address, number of columns, number of rows
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(outputPin, OUTPUT);
+  lcd.begin(16, 2);
+  lcd.print("Temperature:");
+}
+
+void loop() {
+  int temperature = analogRead(temperaturePin);  // Read temperature from sensor
+  float temperatureC = map(temperature, 0, 4095, 0, 100);  // Convert analog reading to Celsius
+
+  lcd.setCursor(0, 1);
+  lcd.print("Temp: ");
+  lcd.print(temperatureC);
+  lcd.print("C");
+
+  if (Serial.available() > 0) {
+    char command = Serial.read();  // Read serial input
+    
+    if (command == '1') {
+      digitalWrite(outputPin, HIGH);  // Turn on output device
+    } else if (command == '0') {
+      digitalWrite(outputPin, LOW);   // Turn off output device
+    }
+  }
+  
+  delay(1000);  // Delay for 1 second before taking the next temperature reading
+}
