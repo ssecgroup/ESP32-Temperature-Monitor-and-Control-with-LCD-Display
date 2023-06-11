@@ -1,0 +1,2 @@
+# ESP32 Temperature Monitor and Control with LCD Display
+ This ESP32 project allows you to monitor temperature readings using a temperature sensor and control an output device, such as an LED, using the ESP32 board. The temperature readings are displayed on an LCD screen in real-time, providing an intuitive interface for temperature monitoring. Use simple commands through the serial monitor to control the output device.
